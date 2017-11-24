@@ -1,0 +1,21 @@
+---
+
+dockerpull_list:
+  - composer/composer
+  - ruby
+  - node
+  - php
+  - python
+  - golang
+
+dockerpull_aliases:
+  - "alias composer='docker run -v $(pwd):/app composer/composer'"
+  - "alias ruby='docker run --rm -v $(pwd):/usr/src/app -w /usr/src/app ruby ruby'"
+  - "alias gem='docker run --rm -v $(pwd):/usr/src/app -w /usr/src/app ruby gem'"
+  - "alias bundle='docker --rm -v $(pwd):/usr/src/app -w /usr/src/app ruby bundle'"
+  - "alias node='docker run -it --rm -v $(pwd):/usr/src/app -w /usr/src/app node:6 node'"
+  - "alias php='docker run -it --rm -v $(pwd):/usr/src/myapp -w /usr/src/myapp php php'"
+  - "alias go='docker run -it --rm -v $(pwd):/usr/src/myapp -w /usr/src/myapp golang go'"
+  - "alias python='docker run -it --rm -v $(pwd):/usr/src/myapp -w /usr/src/myapp python python'"
+
+

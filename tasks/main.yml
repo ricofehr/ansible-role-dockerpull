@@ -1,0 +1,51 @@
+---
+
+- name: Add current user to docker group
+  user:
+    append: yes
+    name: "{{ ansible_user }}"
+    groups:
+      - docker
+  become: yes
+
+- name: install docker-py
+  pip:
+    name: docker-py
+  become: yes
+
+- name: Pull docker image
+  docker_image:
+    name: "{{ item }}"
+  with_items: "{{ dockerpull_list }}"
+  become: yes
+
+- file:
+    path: ~/.docker_aliases
+    state: touch
+
+- name: Generate Aliases
+  lineinfile:
+    dest: ~/.docker_aliases
+    line: "{{ item }}"
+    state: present
+  with_items: "{{ dockerpull_aliases }}"
+
+- stat: path=~/.bashrc
+  register: bashrc_file
+
+- name: Source file into bash shell rc
+  lineinfile:
+    dest: ~/.bashrc
+    line: "source .docker_aliases"
+    state: present
+  when: bashrc_file.stat.exists
+
+- stat: path=~/.zshrc
+  register: zshrc_file
+
+- name: Source file into zsh shell rc
+  lineinfile:
+    dest: ~/.zshrc
+    line: "source .docker_aliases"
+    state: present
+  when: zshrc_file.stat.exists
