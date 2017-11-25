@@ -46,6 +46,6 @@
 - name: Source file into zsh shell rc
   lineinfile:
     dest: ~/.zshrc
-    line: "source .docker_aliases"
+    line: "source ~/.docker_aliases"
     state: present
   when: zshrc_file.stat.exists
